@@ -18,7 +18,8 @@ namespace Scripl.Data
             {
                 if (_documentStore == null)
                 {
-                    _documentStore = new EmbeddableDocumentStore { DataDirectory = @"C:\Src\public\Scripl\Scripl\bin\Debug\Data" };
+                    //C:\Src\public\Scripl\Scripl\bin\Debug\Data
+                    _documentStore = new EmbeddableDocumentStore { DataDirectory = Properties.Settings.Default.DataDirectory };
                     _documentStore.Initialize();
                 }
             }

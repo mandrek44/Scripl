@@ -3,10 +3,14 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Threading;
 
+using NLog;
+
 namespace Scripl.Commands
 {
     internal class FileHelper
     {
+        private static Logger _log = NLog.LogManager.GetCurrentClassLogger();
+
         public static string GetChecksum(string file)
         {
             using (var stream = new BufferedStream(File.OpenRead(file)))
@@ -28,7 +32,7 @@ namespace Scripl.Commands
                 {
                     if (i == 19) throw;
 
-                    Console.WriteLine("Unable to read file, trying again...");
+                    _log.Trace("Unable to read file, trying again...");
                     Thread.Sleep(500);
                 }
             }

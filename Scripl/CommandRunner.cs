@@ -8,12 +8,15 @@ using System.Text;
 
 using Autofac;
 
+using NLog;
+
 using Scripl.Commands;
 
 namespace Scripl
 {
     public class CommandRunner
     {
+        private static Logger _log = NLog.LogManager.GetCurrentClassLogger();
         private IContainer _iocContainer;
         private readonly bool _isService;
         private static readonly object _iocContainerSync = new object();
@@ -94,7 +97,7 @@ namespace Scripl
 
         private void Invoke(Type commandType, string[] commandArgs)
         {
-            Console.WriteLine(commandType.Name + " " + string.Join(" ", commandArgs));
+            _log.Trace(commandType.Name + " " + string.Join(" ", commandArgs));
             var methodInfo = commandType.GetMethod("Run");
             object[] realArgs;
             if (methodInfo.GetParameters().Count() == 1 && methodInfo.GetParameters().First().GetCustomAttributes(typeof(ParamArrayAttribute), false).Length > 0)

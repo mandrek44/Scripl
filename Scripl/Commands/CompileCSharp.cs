@@ -5,11 +5,15 @@ using System.Threading;
 
 using Microsoft.CSharp;
 
+using NLog;
+
 namespace Scripl.Commands
 {
     [Command("compile")]
     internal class CompileCSharp
     {
+        private static Logger _log = NLog.LogManager.GetCurrentClassLogger();
+
         public void Run(string sourceFile, string targetFile)
         {
             CompileFile(targetFile, sourceFile);
@@ -21,7 +25,7 @@ namespace Scripl.Commands
             var results = Compile(tempExeName, sources);
 
             foreach (CompilerError error in results.Errors)
-                Console.WriteLine("Line {0},{1}\t: {2}\r\n", error.Line, error.Column, error.ErrorText);
+                _log.Trace("Line {0},{1}\t: {2}\r\n", error.Line, error.Column, error.ErrorText);
 
             return results;
         }

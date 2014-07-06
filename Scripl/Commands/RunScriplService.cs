@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 using Microsoft.Owin;
 using Microsoft.Owin.Hosting;
+
+using NLog;
 
 using Owin;
 
@@ -14,6 +17,7 @@ namespace Scripl.Commands
     [Command("service")]
     internal class RunScriplService
     {
+        private static Logger _log = NLog.LogManager.GetCurrentClassLogger();
         private readonly IServiceAddressProvider _addressProvider;
 
         public RunScriplService(IServiceAddressProvider addressProvider)
@@ -23,10 +27,21 @@ namespace Scripl.Commands
 
         public void Run()
         {
-            using (WebApp.Start(new StartOptions(_addressProvider.GetAddress()), AppBuilder))
+            
+
+            using (Start())
             {
+                _log.Trace("Scripl host started");
                 Console.ReadLine();
+
+                _log.Trace("Scripl host exiting");
             }
+        }
+
+        public IDisposable Start()
+        {
+            _log.Trace("Starting scripl host with address " + _addressProvider.GetAddress());
+            return WebApp.Start(new StartOptions(_addressProvider.GetAddress()) , AppBuilder);
         }
 
         private void AppBuilder(IAppBuilder app)
@@ -40,7 +55,7 @@ namespace Scripl.Commands
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(ex);
+                        _log.Trace(ex);
                         throw;
                     }
                 });
@@ -54,6 +69,7 @@ namespace Scripl.Commands
 
         private async Task Invoke(IOwinContext context, Func<Task> next)
         {
+            _log.Trace("{0} {1}", context.Request.Method, context.Request.Path);
             if (context.Request.Method == "GET" && context.Request.Path.Equals(new PathString("/running")))
             {
                 HealthCheck(context);

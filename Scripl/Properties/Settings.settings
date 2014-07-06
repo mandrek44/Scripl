@@ -101,5 +101,8 @@ EndGlobal</Value>
 }
 </Value>
     </Setting>
+    <Setting Name="DataDirectory" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Src\public\Scripl\Scripl\bin\Debug\Data</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -10,11 +10,14 @@ using Microsoft.Win32;
 
 using NDesk.Options;
 
+using NLog;
+
 namespace Scripl.Commands
 {
     [Command("edit")]
     public class Edit
     {
+        private static Logger _log = NLog.LogManager.GetCurrentClassLogger();
         private readonly CommandRunner _runner;
 
         public Edit(CommandRunner runner)
@@ -38,11 +41,12 @@ namespace Scripl.Commands
                                     { "d|default", v=>forceUseDefault = v != null },
                                     { "w|wait", v=>waitForUserInput = v != null}
                                 }).Parse(args);
-            var exeName = unparsedArgs[0];
+
+            var exeName = Path.GetFullPath(unparsedArgs[0]);  
 
             if (!File.Exists(exeName))
             {
-                Console.WriteLine("File does not exists");
+                _log.Trace("File does not exists");
                 return;
             }
 
@@ -58,20 +62,20 @@ namespace Scripl.Commands
             {
                 try
                 {
-                    Console.WriteLine("Opening file for editor");
+                    _log.Trace("Opening file for editor");
                     var process = Process.Start(sourceFilePath);
                     if (!waitForUserInput)
                         process.WaitForExit();
                 }
                 catch (Win32Exception ex)
                 {
-                    Console.WriteLine("Exception caught " + ex);
+                    _log.Trace("Exception caught " + ex);
                 }
             }
 
             if (waitForUserInput)
             {
-                Console.WriteLine("Press any key to exit");
+                _log.Trace("Press any key to exit");
                 Console.ReadKey();
             }
         }

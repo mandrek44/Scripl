@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 using NDesk.Options;
 
+using NLog;
+
 using Scripl.Data;
 
 namespace Scripl.Commands
@@ -14,6 +16,7 @@ namespace Scripl.Commands
     [RunOnService]
     public class Monitor
     {
+        private static Logger _log = NLog.LogManager.GetCurrentClassLogger();
         private static readonly CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
         private static readonly TempFileCollection _tempFiles = new TempFileCollection();
 
@@ -31,7 +34,7 @@ namespace Scripl.Commands
 
             if (!File.Exists(targetExec))
             {
-                Console.WriteLine(targetExec + " does not exists");
+                _log.Trace(targetExec + " does not exists");
                 throw new InvalidOperationException();
             }
 
@@ -41,7 +44,7 @@ namespace Scripl.Commands
 
             if (sourceCode == null)
             {
-                Console.WriteLine("Cannot find sources for " + targetExec);
+                _log.Trace("Cannot find sources for " + targetExec);
                 throw new FileNotFoundException();
             }
 
@@ -69,7 +72,7 @@ namespace Scripl.Commands
 
                     fileSystemWatcher.EnableRaisingEvents = true;
 
-                    Console.WriteLine("Waiting for changes in " + temporaryFile);
+                    _log.Trace("Waiting for changes in " + temporaryFile);
                     while (!token.IsCancellationRequested)
                     {
                         fileSystemWatcher.WaitForChanged(WatcherChangeTypes.All, 500);
@@ -78,14 +81,14 @@ namespace Scripl.Commands
 
             if (wait)
             {
-                Console.WriteLine("Press any key to quit");
+                _log.Trace("Press any key to quit");
                 Console.ReadKey();
             }
         }
 
         public static void RecompileFile(string sourceCodeFile, string targetExec)
         {
-            Console.WriteLine("Recompiling " + sourceCodeFile + " to " + targetExec);
+            _log.Trace("Recompiling " + sourceCodeFile + " to " + targetExec);
             var result = CompileCSharp.CompileFile(targetExec, sourceCodeFile);
 
             if (!result.Errors.HasErrors)

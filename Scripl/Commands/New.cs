@@ -22,10 +22,12 @@ namespace Scripl.Commands
                 var source = Properties.Settings.Default.newScriplTemplate;
                 File.WriteAllText(tempSourceFile, source);
 
-                var exeName = "editme.exe";
+                var exeName = Path.GetFullPath("editme.exe");
 
                 CompileCSharp.Compile(exeName, source);
                 _runner.Invoke("add", tempSourceFile, exeName);
+
+                _runner.Invoke("edit", exeName);
             }
         }
     }
