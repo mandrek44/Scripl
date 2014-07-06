@@ -1,10 +1,10 @@
 ﻿using System.IO;
 
+using Mandro.Utils.Setup;
+
 using NDesk.Options;
 
 using NLog;
-
-using Scripl.SelfInstall;
 
 namespace Scripl.Commands
 {
