@@ -12,10 +12,21 @@ namespace Scripl.Commands
     {
         public void Run(string sourceFile, string targetFile)
         {
-            Compile(targetFile, sourceFile);
+            CompileFile(targetFile, sourceFile);
         }
 
-        public static CompilerResults Compile(string tempExeName, string sourceFileName)
+        public static CompilerResults CompileFile(string tempExeName, string sourceFileName)
+        {
+            var sources = SafeReadAllText(sourceFileName);
+            var results = Compile(tempExeName, sources);
+
+            foreach (CompilerError error in results.Errors)
+                Console.WriteLine("Line {0},{1}\t: {2}\r\n", error.Line, error.Column, error.ErrorText);
+
+            return results;
+        }
+
+        public static CompilerResults Compile(string tempExeName, string sources)
         {
             var parameters = new CompilerParameters();
             parameters.ReferencedAssemblies.Add("System.dll");
@@ -31,11 +42,8 @@ namespace Scripl.Commands
             parameters.ReferencedAssemblies.Add("System.Data.DataSetExtensions.dll");
 
             var compiler = new CSharpCodeProvider().CreateCompiler();
-            var results = compiler.CompileAssemblyFromSource(parameters, SafeReadAllText(sourceFileName));
 
-            foreach (CompilerError error in results.Errors)
-                Console.WriteLine("Line {0},{1}\t: {2}\r\n", error.Line, error.Column, error.ErrorText);
-
+            var results = compiler.CompileAssemblyFromSource(parameters, sources);
             return results;
         }
 

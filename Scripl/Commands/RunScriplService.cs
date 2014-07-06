@@ -74,7 +74,7 @@ namespace Scripl.Commands
             context.Response.Write("OK");
         }
 
-        private static async Task RunCommandOnServer(IOwinContext context)
+        private async Task RunCommandOnServer(IOwinContext context)
         {
             PathString commandNameSegment;
             context.Request.Path.StartsWithSegments(new PathString("/cli"), out commandNameSegment);

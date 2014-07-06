@@ -34,5 +34,94 @@ namespace Scripl.Properties {
                 this["Port"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<Project ToolsVersion=\"12.0\" DefaultTarge" +
+            "ts=\"Build\" xmlns=\"http://schemas.microsoft.com/developer/msbuild/2003\">\r\n  <Impo" +
+            "rt Project=\"$(MSBuildExtensionsPath)\\$(MSBuildToolsVersion)\\Microsoft.Common.pro" +
+            "ps\" Condition=\"Exists(\'$(MSBuildExtensionsPath)\\$(MSBuildToolsVersion)\\Microsoft" +
+            ".Common.props\')\" />\r\n  <PropertyGroup>\r\n    <Configuration Condition=\" \'$(Config" +
+            "uration)\' == \'\' \">Debug</Configuration>\r\n    <Platform Condition=\" \'$(Platform)\'" +
+            " == \'\' \">AnyCPU</Platform>\r\n    <ProjectGuid>{FE71DD37-DE23-4FAD-B0D3-6724E2ED01" +
+            "47}</ProjectGuid>\r\n    <OutputType>Exe</OutputType>\r\n    <AppDesignerFolder>Prop" +
+            "erties</AppDesignerFolder>\r\n    <RootNamespace>Scripl.ConsoleHost</RootNamespace" +
+            ">\r\n    <AssemblyName>Scripl.ConsoleHost</AssemblyName>\r\n    <TargetFrameworkVers" +
+            "ion>v4.5</TargetFrameworkVersion>\r\n    <FileAlignment>512</FileAlignment>\r\n  </P" +
+            "ropertyGroup>\r\n  <PropertyGroup Condition=\" \'$(Configuration)|$(Platform)\' == \'D" +
+            "ebug|AnyCPU\' \">\r\n    <PlatformTarget>AnyCPU</PlatformTarget>\r\n    <DebugSymbols>" +
+            "true</DebugSymbols>\r\n    <DebugType>full</DebugType>\r\n    <Optimize>false</Optim" +
+            "ize>\r\n    <OutputPath>bin\\Debug\\</OutputPath>\r\n    <DefineConstants>DEBUG;TRACE<" +
+            "/DefineConstants>\r\n    <ErrorReport>prompt</ErrorReport>\r\n    <WarningLevel>4</W" +
+            "arningLevel>\r\n  </PropertyGroup>\r\n  <PropertyGroup Condition=\" \'$(Configuration)" +
+            "|$(Platform)\' == \'Release|AnyCPU\' \">\r\n    <PlatformTarget>AnyCPU</PlatformTarget" +
+            ">\r\n    <DebugType>pdbonly</DebugType>\r\n    <Optimize>true</Optimize>\r\n    <Outpu" +
+            "tPath>bin\\Release\\</OutputPath>\r\n    <DefineConstants>TRACE</DefineConstants>\r\n " +
+            "   <ErrorReport>prompt</ErrorReport>\r\n    <WarningLevel>4</WarningLevel>\r\n  </Pr" +
+            "opertyGroup>\r\n  <ItemGroup>\r\n    <Reference Include=\"System\" />\r\n    <Reference " +
+            "Include=\"System.Core\" />\r\n    <Reference Include=\"System.Xml.Linq\" />\r\n    <Refe" +
+            "rence Include=\"System.Data.DataSetExtensions\" />\r\n    <Reference Include=\"Micros" +
+            "oft.CSharp\" />\r\n    <Reference Include=\"System.Data\" />\r\n    <Reference Include=" +
+            "\"System.Xml\" />\r\n  </ItemGroup>\r\n  <ItemGroup>\r\n    <Compile Include=\"{sourceFil" +
+            "eName}\" />    \r\n  </ItemGroup>\r\n  <Import Project=\"$(MSBuildToolsPath)\\Microsoft" +
+            ".CSharp.targets\" />\r\n  <!-- To modify your build process, add your task inside o" +
+            "ne of the targets below and uncomment it. \r\n       Other similar extension point" +
+            "s exist, see Microsoft.Common.targets.\r\n  <Target Name=\"BeforeBuild\">\r\n  </Targe" +
+            "t>\r\n  <Target Name=\"AfterBuild\">\r\n  </Target>\r\n  -->\r\n</Project>")]
+        public string csprojTemplate {
+            get {
+                return ((string)(this["csprojTemplate"]));
+            }
+            set {
+                this["csprojTemplate"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project(""{{SolutionGuid}}"") = ""{projectName}"", ""{csprojPath}"", ""{{ProjectGuid}}""
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{{ProjectGuid}}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{{ProjectGuid}}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{{ProjectGuid}}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{{ProjectGuid}}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal")]
+        public string slnTemplate {
+            get {
+                return ((string)(this["slnTemplate"]));
+            }
+            set {
+                this["slnTemplate"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("namespace Scripl.ConsoleHost\r\n{\r\n    using System;\r\n\r\n    class Program\r\n\t{\r\n\t\tst" +
+            "atic void Main(string[] args)\r\n\t\t{\r\n\t\t\tConsole.WriteLine(\"Hello World!\");\r\n\t\t\tCo" +
+            "nsole.ReadKey();\r\n\t\t}\r\n\t}\r\n}\r\n")]
+        public string newScriplTemplate {
+            get {
+                return ((string)(this["newScriplTemplate"]));
+            }
+            set {
+                this["newScriplTemplate"] = value;
+            }
+        }
     }
 }

@@ -66,6 +66,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\WindowsAzure.Storage.4.1.0\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
     </Reference>
+    <Reference Include="NDesk.Options">
+      <HintPath>..\packages\NDesk.Options.0.2.1\lib\NDesk.Options.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -101,7 +104,8 @@
   <ItemGroup>
     <Compile Include="Commands\AddSourceCode.cs" />
     <Compile Include="CommandAttribute.cs" />
-    <Compile Include="Commands\IServiceAddressProvider.cs" />
+    <Compile Include="Commands\New.cs" />
+    <Compile Include="IServiceAddressProvider.cs" />
     <Compile Include="Commands\Monitor.cs" />
     <Compile Include="CommandRunner.cs" />
     <Compile Include="CommandsScanner.cs" />

@@ -4,6 +4,8 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
+using NDesk.Options;
+
 using Scripl.Data;
 
 namespace Scripl.Commands
@@ -12,21 +14,20 @@ namespace Scripl.Commands
     [RunOnService]
     public class Monitor
     {
-        private CommandRunner _runner;
-
         private static readonly CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
         private static readonly TempFileCollection _tempFiles = new TempFileCollection();
 
-        public Monitor(CommandRunner runner)
-        {
-            _runner = runner;
-        }
-
-        //public void Run(string sourceCodeFile, string targetExec)
         public void Run(params string[] args)
         {
-            var targetExec = args[1];
-            var sourceCodeFile = args[0];
+            bool wait = true;
+            bool isTemp = false;
+            var notParsedArgs = (new OptionSet
+                                 {
+                                     { "no-wait", v => wait = v == null },
+                                     { "is-temp", v => isTemp = v != null }
+                                 }).Parse(args);
+            var targetExec = notParsedArgs[1];
+            var sourceCodeFile = notParsedArgs[0];
 
             if (!File.Exists(targetExec))
             {
@@ -36,7 +37,7 @@ namespace Scripl.Commands
 
             var checksum = FileHelper.GetChecksum(targetExec);
 
-            SourceCode sourceCode = SourceCodeRepository.Instance.LoadSourceCode(checksum);
+            var sourceCode = SourceCodeRepository.Instance.LoadSourceCode(checksum);
 
             if (sourceCode == null)
             {
@@ -46,7 +47,7 @@ namespace Scripl.Commands
 
             var source = sourceCode.Source;
             var temporaryFile = sourceCodeFile;
-            if (_runner.IsService)
+            if (isTemp)
             {
                 _tempFiles.AddFile(temporaryFile, false);
             }
@@ -60,8 +61,7 @@ namespace Scripl.Commands
             Task.Run(
                 () =>
                 {
-                    var fileSystemWatcher = new FileSystemWatcher(Path.GetDirectoryName(temporaryFile))
-                                            { Filter = Path.GetFileName(temporaryFile), NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite | NotifyFilters.FileName };
+                    var fileSystemWatcher = new FileSystemWatcher(Path.GetDirectoryName(temporaryFile)) { Filter = Path.GetFileName(temporaryFile), NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite | NotifyFilters.FileName };
 
                     fileSystemWatcher.Changed += (sender, _) => recompile();
                     fileSystemWatcher.Renamed += (sender, _) => recompile();
@@ -76,7 +76,7 @@ namespace Scripl.Commands
                     }
                 }, token);
 
-            if (!_runner.IsService)
+            if (wait)
             {
                 Console.WriteLine("Press any key to quit");
                 Console.ReadKey();
@@ -86,12 +86,12 @@ namespace Scripl.Commands
         public static void RecompileFile(string sourceCodeFile, string targetExec)
         {
             Console.WriteLine("Recompiling " + sourceCodeFile + " to " + targetExec);
-            var result = CompileCSharp.Compile(targetExec, sourceCodeFile);
+            var result = CompileCSharp.CompileFile(targetExec, sourceCodeFile);
 
             if (!result.Errors.HasErrors)
             {
                 new AddSourceCode().Run(sourceCodeFile, targetExec);
             }
-        }   
+        }
     }
 }

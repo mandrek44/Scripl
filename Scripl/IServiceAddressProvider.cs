@@ -1,6 +1,6 @@
 ﻿namespace Scripl.Commands
 {
-    internal interface IServiceAddressProvider
+    public interface IServiceAddressProvider
     {
         string GetAddress();
     }

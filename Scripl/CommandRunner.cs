@@ -8,6 +8,8 @@ using System.Text;
 
 using Autofac;
 
+using Scripl.Commands;
+
 namespace Scripl
 {
     public class CommandRunner
@@ -16,9 +18,9 @@ namespace Scripl
         private readonly bool _isService;
         private static readonly object _iocContainerSync = new object();
 
-        private string _serverBaseAddress = "http://localhost:12345";
-
         private IDictionary<string, Type> _commands;
+
+        private IServiceAddressProvider _addressProvider;
 
         public CommandRunner()
         {
@@ -82,6 +84,14 @@ namespace Scripl
             }
         }
 
+        public IServiceAddressProvider AddressProvider
+        {
+            get
+            {
+                return _addressProvider ?? (_addressProvider = IocContainer.Resolve<IServiceAddressProvider>());
+            }
+        }
+
         private void Invoke(Type commandType, string[] commandArgs)
         {
             Console.WriteLine(commandType.Name + " " + string.Join(" ", commandArgs));
@@ -105,7 +115,7 @@ namespace Scripl
             {
                 using (var wc = new WebClient())
                 {
-                    return Encoding.Default.GetString(wc.DownloadData(string.Format("{0}/running", _serverBaseAddress))) == "OK";
+                    return Encoding.Default.GetString(wc.DownloadData(string.Format("{0}/running", AddressProvider.GetAddress()))) == "OK";
                 }
             }
             catch (Exception)
@@ -124,7 +134,7 @@ namespace Scripl
                     data.Add(i.ToString(), commandArgs[i]);
                 }
 
-                wc.UploadValues(string.Format("{0}/cli/", _serverBaseAddress) + commandName, "POST", data);
+                wc.UploadValues(string.Format("{0}/cli/", AddressProvider.GetAddress()) + commandName, "POST", data);
             }
         }
     }

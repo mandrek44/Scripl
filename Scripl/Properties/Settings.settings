@@ -5,5 +5,101 @@
     <Setting Name="Port" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">12345</Value>
     </Setting>
+    <Setting Name="csprojTemplate" Type="System.String" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003"&gt;
+  &lt;Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" /&gt;
+  &lt;PropertyGroup&gt;
+    &lt;Configuration Condition=" '$(Configuration)' == '' "&gt;Debug&lt;/Configuration&gt;
+    &lt;Platform Condition=" '$(Platform)' == '' "&gt;AnyCPU&lt;/Platform&gt;
+    &lt;ProjectGuid&gt;{FE71DD37-DE23-4FAD-B0D3-6724E2ED0147}&lt;/ProjectGuid&gt;
+    &lt;OutputType&gt;Exe&lt;/OutputType&gt;
+    &lt;AppDesignerFolder&gt;Properties&lt;/AppDesignerFolder&gt;
+    &lt;RootNamespace&gt;Scripl.ConsoleHost&lt;/RootNamespace&gt;
+    &lt;AssemblyName&gt;Scripl.ConsoleHost&lt;/AssemblyName&gt;
+    &lt;TargetFrameworkVersion&gt;v4.5&lt;/TargetFrameworkVersion&gt;
+    &lt;FileAlignment&gt;512&lt;/FileAlignment&gt;
+  &lt;/PropertyGroup&gt;
+  &lt;PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' "&gt;
+    &lt;PlatformTarget&gt;AnyCPU&lt;/PlatformTarget&gt;
+    &lt;DebugSymbols&gt;true&lt;/DebugSymbols&gt;
+    &lt;DebugType&gt;full&lt;/DebugType&gt;
+    &lt;Optimize&gt;false&lt;/Optimize&gt;
+    &lt;OutputPath&gt;bin\Debug\&lt;/OutputPath&gt;
+    &lt;DefineConstants&gt;DEBUG;TRACE&lt;/DefineConstants&gt;
+    &lt;ErrorReport&gt;prompt&lt;/ErrorReport&gt;
+    &lt;WarningLevel&gt;4&lt;/WarningLevel&gt;
+  &lt;/PropertyGroup&gt;
+  &lt;PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' "&gt;
+    &lt;PlatformTarget&gt;AnyCPU&lt;/PlatformTarget&gt;
+    &lt;DebugType&gt;pdbonly&lt;/DebugType&gt;
+    &lt;Optimize&gt;true&lt;/Optimize&gt;
+    &lt;OutputPath&gt;bin\Release\&lt;/OutputPath&gt;
+    &lt;DefineConstants&gt;TRACE&lt;/DefineConstants&gt;
+    &lt;ErrorReport&gt;prompt&lt;/ErrorReport&gt;
+    &lt;WarningLevel&gt;4&lt;/WarningLevel&gt;
+  &lt;/PropertyGroup&gt;
+  &lt;ItemGroup&gt;
+    &lt;Reference Include="System" /&gt;
+    &lt;Reference Include="System.Core" /&gt;
+    &lt;Reference Include="System.Xml.Linq" /&gt;
+    &lt;Reference Include="System.Data.DataSetExtensions" /&gt;
+    &lt;Reference Include="Microsoft.CSharp" /&gt;
+    &lt;Reference Include="System.Data" /&gt;
+    &lt;Reference Include="System.Xml" /&gt;
+  &lt;/ItemGroup&gt;
+  &lt;ItemGroup&gt;
+    &lt;Compile Include="{sourceFileName}" /&gt;    
+  &lt;/ItemGroup&gt;
+  &lt;Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" /&gt;
+  &lt;!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  &lt;Target Name="BeforeBuild"&gt;
+  &lt;/Target&gt;
+  &lt;Target Name="AfterBuild"&gt;
+  &lt;/Target&gt;
+  --&gt;
+&lt;/Project&gt;</Value>
+    </Setting>
+    <Setting Name="slnTemplate" Type="System.String" Scope="User">
+      <Value Profile="(Default)">
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{{SolutionGuid}}") = "{projectName}", "{csprojPath}", "{{ProjectGuid}}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{{ProjectGuid}}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{{ProjectGuid}}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{{ProjectGuid}}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{{ProjectGuid}}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal</Value>
+    </Setting>
+    <Setting Name="newScriplTemplate" Type="System.String" Scope="User">
+      <Value Profile="(Default)">namespace Scripl.ConsoleHost
+{
+    using System;
+
+    class Program
+	{
+		static void Main(string[] args)
+		{
+			Console.WriteLine("Hello World!");
+			Console.ReadKey();
+		}
+	}
+}
+</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
