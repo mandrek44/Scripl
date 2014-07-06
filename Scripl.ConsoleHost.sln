@@ -1,8 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scripl.Setup", "Scripl.Setup\Scripl.Setup.csproj", "{F7F6C2BF-0BA3-425D-A4BD-CF279EC2687C}"
-EndProject
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{C8A7CB2C-F805-42F4-BFF8-E6374C1176B3}"
 	ProjectSection(SolutionItems) = preProject
 		ProductInfo.cs = ProductInfo.cs
@@ -18,10 +18,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F7F6C2BF-0BA3-425D-A4BD-CF279EC2687C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F7F6C2BF-0BA3-425D-A4BD-CF279EC2687C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F7F6C2BF-0BA3-425D-A4BD-CF279EC2687C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F7F6C2BF-0BA3-425D-A4BD-CF279EC2687C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BE07BC9B-CA2F-4A81-BCE9-F30F48085F86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BE07BC9B-CA2F-4A81-BCE9-F30F48085F86}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE07BC9B-CA2F-4A81-BCE9-F30F48085F86}.Release|Any CPU.ActiveCfg = Release|Any CPU
