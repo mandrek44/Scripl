@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scripl.ConsoleHost", "Scripl.ConsoleHost\Scripl.ConsoleHost.csproj", "{FE71DD37-DE23-4FAD-B0D3-6724E2ED0147}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scripl.RecompilerService", "Scripl.RecompilerService\Scripl.RecompilerService.csproj", "{B945AA41-1DAF-440D-ADCA-4D8A0C1CCF16}"
@@ -15,6 +17,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{C8A7CB
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scripl.SelfInstall", "Scripl.SelfInstall\Scripl.SelfInstall.csproj", "{F3883F2D-3CD7-4B5E-8DC8-3F056E1BA586}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scripl", "Scripl\Scripl.csproj", "{BE07BC9B-CA2F-4A81-BCE9-F30F48085F86}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scripl.Tests", "Scripl.Tests\Scripl.Tests.csproj", "{AAE394AA-F48F-49CF-A657-FABE3DEC9CD1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,6 +48,14 @@ Global
 		{F3883F2D-3CD7-4B5E-8DC8-3F056E1BA586}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F3883F2D-3CD7-4B5E-8DC8-3F056E1BA586}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F3883F2D-3CD7-4B5E-8DC8-3F056E1BA586}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE07BC9B-CA2F-4A81-BCE9-F30F48085F86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE07BC9B-CA2F-4A81-BCE9-F30F48085F86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE07BC9B-CA2F-4A81-BCE9-F30F48085F86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE07BC9B-CA2F-4A81-BCE9-F30F48085F86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AAE394AA-F48F-49CF-A657-FABE3DEC9CD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAE394AA-F48F-49CF-A657-FABE3DEC9CD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AAE394AA-F48F-49CF-A657-FABE3DEC9CD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AAE394AA-F48F-49CF-A657-FABE3DEC9CD1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
