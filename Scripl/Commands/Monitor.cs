@@ -12,11 +12,22 @@ namespace Scripl.Commands
     [RunOnService]
     public class Monitor
     {
+        private CommandRunner _runner;
+
         private static readonly CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
         private static readonly TempFileCollection _tempFiles = new TempFileCollection();
 
-        public void Run(string sourceCodeFile, string targetExec)
+        public Monitor(CommandRunner runner)
         {
+            _runner = runner;
+        }
+
+        //public void Run(string sourceCodeFile, string targetExec)
+        public void Run(params string[] args)
+        {
+            var targetExec = args[1];
+            var sourceCodeFile = args[0];
+
             if (!File.Exists(targetExec))
             {
                 Console.WriteLine(targetExec + " does not exists");
@@ -35,7 +46,7 @@ namespace Scripl.Commands
 
             var source = sourceCode.Source;
             var temporaryFile = sourceCodeFile;
-            if (!Environment.UserInteractive)
+            if (_runner.IsService)
             {
                 _tempFiles.AddFile(temporaryFile, false);
             }
@@ -52,9 +63,9 @@ namespace Scripl.Commands
                     var fileSystemWatcher = new FileSystemWatcher(Path.GetDirectoryName(temporaryFile))
                                             { Filter = Path.GetFileName(temporaryFile), NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite | NotifyFilters.FileName };
 
-                    fileSystemWatcher.Changed += (sender, args) => recompile();
-                    fileSystemWatcher.Renamed += (sender, args) => recompile();
-                    fileSystemWatcher.Created += (sender, args) => recompile();
+                    fileSystemWatcher.Changed += (sender, _) => recompile();
+                    fileSystemWatcher.Renamed += (sender, _) => recompile();
+                    fileSystemWatcher.Created += (sender, _) => recompile();
 
                     fileSystemWatcher.EnableRaisingEvents = true;
 
@@ -65,7 +76,7 @@ namespace Scripl.Commands
                     }
                 }, token);
 
-            if (Environment.UserInteractive)
+            if (!_runner.IsService)
             {
                 Console.WriteLine("Press any key to quit");
                 Console.ReadKey();

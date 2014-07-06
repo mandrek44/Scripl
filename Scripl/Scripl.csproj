@@ -101,6 +101,7 @@
   <ItemGroup>
     <Compile Include="Commands\AddSourceCode.cs" />
     <Compile Include="CommandAttribute.cs" />
+    <Compile Include="Commands\IServiceAddressProvider.cs" />
     <Compile Include="Commands\Monitor.cs" />
     <Compile Include="CommandRunner.cs" />
     <Compile Include="CommandsScanner.cs" />
@@ -112,11 +113,20 @@
     <Compile Include="Commands\RunScriplService.cs" />
     <Compile Include="Data\SourceCode.cs" />
     <Compile Include="Data\SourceCodeRepository.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="RunOnServiceAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

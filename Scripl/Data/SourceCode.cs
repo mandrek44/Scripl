@@ -1,6 +1,6 @@
 namespace Scripl.Data
 {
-    internal class SourceCode
+    public class SourceCode
     {
         public string Source { get; set; }
 

@@ -30,6 +30,20 @@ namespace Scripl
             _isService = isService;
         }
 
+        public void Invoke(string commandName, params string[] commandArgs)
+        {
+            var commandType = Commands[commandName];
+
+            if (!IsService && commandType.GetCustomAttributes(typeof(RunOnServiceAttribute)).Any() && IsServiceRunning())
+            {
+                RunOnService(commandName, commandArgs);
+            }
+            else
+            {
+                Invoke(commandType, commandArgs);
+            }
+        }
+
         private IContainer IocContainer
         {
             get
@@ -42,6 +56,7 @@ namespace Scripl
                         {
                             var containerBuilder = new ContainerBuilder();
                             containerBuilder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly()).AsSelf().AsImplementedInterfaces();
+                            containerBuilder.RegisterInstance(this).AsSelf();
                             _iocContainer = containerBuilder.Build();
                         }
                     }
@@ -59,24 +74,29 @@ namespace Scripl
             }
         }
 
-        public void Invoke(string commandName, params string[] commandArgs)
+        public bool IsService
         {
-            var commandType = Commands[commandName];
-
-            if (!_isService && commandType.GetCustomAttributes(typeof(RunOnServiceAttribute)).Any() && IsServiceRunning())
+            get
             {
-                RunOnService(commandName, commandArgs);
-            }
-            else
-            {
-                Invoke(commandType, commandArgs);    
+                return _isService;
             }
         }
 
         private void Invoke(Type commandType, string[] commandArgs)
         {
             Console.WriteLine(commandType.Name + " " + string.Join(" ", commandArgs));
-            commandType.GetMethod("Run").Invoke(IocContainer.Resolve(commandType), commandArgs);
+            var methodInfo = commandType.GetMethod("Run");
+            object[] realArgs;
+            if (methodInfo.GetParameters().Count() == 1 && methodInfo.GetParameters().First().GetCustomAttributes(typeof(ParamArrayAttribute), false).Length > 0)
+            {
+                realArgs = new object[] { commandArgs };
+            }
+            else
+            {
+                realArgs = commandArgs;
+            }
+
+            methodInfo.Invoke(IocContainer.Resolve(commandType), realArgs);
         }
 
         private bool IsServiceRunning()

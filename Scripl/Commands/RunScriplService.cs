@@ -14,38 +14,42 @@ namespace Scripl.Commands
     [Command("service")]
     internal class RunScriplService
     {
+        private readonly IServiceAddressProvider _addressProvider;
+
+        public RunScriplService(IServiceAddressProvider addressProvider)
+        {
+            _addressProvider = addressProvider;
+        }
+
         public void Run()
         {
-            using (WebApp.Start<Startup>("http://localhost:12345"))
+            using (WebApp.Start(new StartOptions(_addressProvider.GetAddress()), AppBuilder))
             {
                 Console.ReadLine();
             }
         }
 
-        class Startup
+        private void AppBuilder(IAppBuilder app)
         {
-            public void Configuration(IAppBuilder app)
-            {
-                app.Use(
-                    async (context, next) =>
+            app.Use(
+                async (context, next) =>
+                {
+                    try
                     {
-                        try
-                        {
-                            await next();
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine(ex);
-                            throw;
-                        }
-                    });
+                        await next();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                        throw;
+                    }
+                });
 
-                app.Use(new RunScriplService().Invoke);
+            app.Use(Invoke);
 
 #if DEBUG
-                app.UseErrorPage();
+            app.UseErrorPage();
 #endif
-            }
         }
 
         private async Task Invoke(IOwinContext context, Func<Task> next)

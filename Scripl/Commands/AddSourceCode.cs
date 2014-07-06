@@ -8,7 +8,7 @@ namespace Scripl.Commands
     {
         public void Run(string sourceCodeFile, string targetExec)
         {
-            SourceCodeRepository.Instance.SaveSourceCode(new SourceCode { Id = FileHelper.GetChecksum(targetExec), Source = FileHelper.SafeReadAllText(sourceCodeFile) });
+            SourceCodeRepository.Instance.SaveSourceCode(new SourceCode { Id = FileHelper.GetChecksum(targetExec), Source = FileHelper.ReadAllTextRetrying(sourceCodeFile) });
         }
     }
 }

@@ -2,16 +2,15 @@ using Raven.Client.Embedded;
 
 namespace Scripl.Data
 {
-    class SourceCodeRepository
+    public class SourceCodeRepository
     {
         public static SourceCodeRepository Instance = new SourceCodeRepository();
+        private EmbeddableDocumentStore _documentStore;
 
         private SourceCodeRepository()
         {
             
         }
-
-        public EmbeddableDocumentStore _documentStore;
 
         private void InitializeDataStore()
         {
@@ -28,13 +27,10 @@ namespace Scripl.Data
         public SourceCode LoadSourceCode(string checksum)
         {
             InitializeDataStore();
-            SourceCode sourceCode;
             using (var session = _documentStore.OpenSession())
             {
-                sourceCode = session.Load<SourceCode>(checksum);
+                return session.Load<SourceCode>(checksum);
             }
-
-            return sourceCode;
         }
 
         public void SaveSourceCode(SourceCode sourceCode)

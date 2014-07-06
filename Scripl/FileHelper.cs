@@ -11,14 +11,14 @@ namespace Scripl.Commands
         {
             using (var stream = new BufferedStream(File.OpenRead(file)))
             {
-                byte[] checksum = new SHA256Managed().ComputeHash(stream);
-                return BitConverter.ToString(checksum).Replace("-", String.Empty);
+                var checksum = new SHA256Managed().ComputeHash(stream);
+                return BitConverter.ToString(checksum).Replace("-", string.Empty);
             }
         }
 
-        public static string SafeReadAllText(string sourceFileName)
+        public static string ReadAllTextRetrying(string sourceFileName, int retries = 20)
         {
-            for (int i = 0; i < 20; ++i)
+            for (int i = 0; i < retries; ++i)
             {
                 try
                 {
