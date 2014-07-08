@@ -76,7 +76,7 @@ namespace Scripl.Commands
             if (waitForUserInput)
             {
                 _log.Trace("Press any key to exit");
-                Console.ReadKey();
+                Console.Read();
             }
         }
 

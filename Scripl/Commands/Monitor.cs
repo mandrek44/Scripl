@@ -82,7 +82,7 @@ namespace Scripl.Commands
             if (wait)
             {
                 _log.Trace("Press any key to quit");
-                Console.ReadKey();
+                Console.Read();
             }
         }
 

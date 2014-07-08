@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.ServiceProcess;
 
 using NLog;
@@ -32,7 +34,5 @@ namespace Scripl
                 ServiceBase.Run(new WindowsService());
             }
         }
-
-
     }
 }
