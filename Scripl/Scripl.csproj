@@ -113,38 +113,66 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\AddSourceCode.cs" />
-    <Compile Include="CommandAttribute.cs" />
-    <Compile Include="Commands\New.cs" />
-    <Compile Include="Commands\Setup.cs" />
-    <Compile Include="IServiceAddressProvider.cs" />
-    <Compile Include="Commands\Monitor.cs" />
-    <Compile Include="CommandRunner.cs" />
-    <Compile Include="CommandsScanner.cs" />
-    <Compile Include="Commands\CompileCSharp.cs" />
-    <Compile Include="Commands\Edit.cs" />
-    <Compile Include="FileHelper.cs" />
+    <Compile Include="PrimaryAdapters\Console\AddSourceCode.cs" />
+    <Compile Include="PrimaryAdapters\Console\CompileCSharp.cs" />
+    <Compile Include="PrimaryAdapters\Console\New.cs" />
+    <Compile Include="PrimaryAdapters\NetworkEndpoint.cs" />
+    <Compile Include="PrimaryAdapters\Console\NetworkEndpointCommand.cs" />
+    <Compile Include="SecondaryAdapters\OS\LocalhostAddressProvider.cs" />
+    <Compile Include="PortsIn\INew.cs" />
+    <Compile Include="PortsIn\IMonitor.cs" />
+    <Compile Include="Core\Monitor.cs" />
+    <Compile Include="PortsIn\ICompileCSharp.cs" />
+    <Compile Include="PortsIn\IAddSourceCode.cs" />
+    <Compile Include="Core\Edit.cs" />
+    <Compile Include="PortsOut\IFileSystemWatcher.cs" />
+    <Compile Include="PortsOut\IUserSettings.cs" />
+    <Compile Include="PortsOut\IProcess.cs" />
+    <Compile Include="PortsOut\IProcessFactory.cs" />
+    <Compile Include="PortsOut\ITemporaryFileManager.cs" />
+    <Compile Include="PortsIn\IEdit.cs" />
+    <Compile Include="PortsOut\IVisualStudioHelper.cs" />
+    <Compile Include="SecondaryAdapters\OS\VisualStudioHelper.cs" />
+    <Compile Include="PortsOut\ICompiler.cs" />
+    <Compile Include="Core\AddSourceCode.cs" />
+    <Compile Include="PrimaryAdapters\CommandAttribute.cs" />
+    <Compile Include="SecondaryAdapters\OS\Compiler.cs" />
+    <Compile Include="Core\New.cs" />
+    <Compile Include="SecondaryAdapters\Setup.cs" />
+    <Compile Include="SecondaryAdapters\OS\PhysicalFileSystem.cs" />
+    <Compile Include="PortsOut\IFileSystem.cs" />
+    <Compile Include="PortsOut\ISourceCodeRepository.cs" />
+    <Compile Include="PortsOut\IServiceAddressProvider.cs" />
+    <Compile Include="PrimaryAdapters\Console\Monitor.cs" />
+    <Compile Include="PrimaryAdapters\CommandRunner.cs" />
+    <Compile Include="PrimaryAdapters\CommandsScanner.cs" />
+    <Compile Include="Core\CompileCSharp.cs" />
+    <Compile Include="PrimaryAdapters\Console\Edit.cs" />
+    <Compile Include="SecondaryAdapters\OS\Process.cs" />
+    <Compile Include="SecondaryAdapters\OS\ProcessFactory.cs" />
+    <Compile Include="SecondaryAdapters\OS\UserSettings.cs" />
+    <Compile Include="SecondaryAdapters\OS\TemporaryFileManager.cs" />
+    <Compile Include="SecondaryAdapters\OS\PhysicalFileSystemWatcherWrapper.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="ProjectInstaller.cs">
+    <Compile Include="PrimaryAdapters\ProjectInstaller.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ProjectInstaller.Designer.cs">
+    <Compile Include="PrimaryAdapters\ProjectInstaller.Designer.cs">
       <DependentUpon>ProjectInstaller.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Commands\RunScriplService.cs" />
     <Compile Include="Data\SourceCode.cs" />
-    <Compile Include="Data\SourceCodeRepository.cs" />
+    <Compile Include="SecondaryAdapters\SourceCodeRepository.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="RunOnServiceAttribute.cs" />
-    <Compile Include="WindowsService.cs">
+    <Compile Include="PrimaryAdapters\RunOnServiceAttribute.cs" />
+    <Compile Include="PrimaryAdapters\WindowsService.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="WindowsService.Designer.cs">
+    <Compile Include="PrimaryAdapters\WindowsService.Designer.cs">
       <DependentUpon>WindowsService.cs</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -160,10 +188,11 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ProjectInstaller.resx">
+    <EmbeddedResource Include="PrimaryAdapters\ProjectInstaller.resx">
       <DependentUpon>ProjectInstaller.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

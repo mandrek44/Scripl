@@ -1,10 +1,11 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.ServiceProcess;
 
 using NLog;
+
+using Scripl.Adapters;
+using Scripl.NotStructured;
 
 namespace Scripl
 {
@@ -27,7 +28,7 @@ namespace Scripl
                     commandArgs = args.Skip(1).ToArray();
                 }
 
-                new CommandRunner().Invoke(commandName, commandArgs);
+                new CommandRunner(isService: commandName == "service").Invoke(commandName, commandArgs);
             }
             else
             {

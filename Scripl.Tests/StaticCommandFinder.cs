@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 
 using NUnit.Framework;
 
+using Scripl.PrimaryAdapters;
+
 namespace Scripl.Tests
 {
     /*
