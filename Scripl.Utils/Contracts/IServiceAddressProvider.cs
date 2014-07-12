@@ -1,4 +1,4 @@
-﻿namespace Scritpl.Utils.Contracts
+﻿namespace Scripl.Utils.Contracts
 {
     public interface IServiceAddressProvider
     {

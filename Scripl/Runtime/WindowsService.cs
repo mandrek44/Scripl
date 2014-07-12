@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Reflection;
 using System.ServiceProcess;
 
 using Autofac;
 
 using NLog;
-
-using Scripl.RavenDb;
 
 namespace Scripl.Runtime
 {
@@ -28,12 +25,10 @@ namespace Scripl.Runtime
 
         public void Start(string[] args)
         {
-            var containerBuilder = new ContainerBuilder();
-            containerBuilder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly()).AsSelf().AsImplementedInterfaces();
-            containerBuilder.RegisterType<SourceCodeRepository>().InstancePerLifetimeScope().AsSelf().AsImplementedInterfaces();
-            containerBuilder.RegisterInstance(this).AsSelf();
-            
             _log.Trace("Starting service");
+            var containerBuilder = CommandRunner.GetContainerBuilder();
+            containerBuilder.RegisterInstance(new CommandRunner(isService: true)).AsSelf().AsImplementedInterfaces();
+
             _service = containerBuilder.Build().Resolve<NetworkEndpoint>().Start();
         }
 

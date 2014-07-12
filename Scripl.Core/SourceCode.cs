@@ -1,6 +1,5 @@
-using Scripl.Contracts;
-
-using Scritpl.Utils.Contracts;
+using Scripl.Ports;
+using Scripl.Utils.Contracts;
 
 namespace Scripl.Core
 {
@@ -17,7 +16,7 @@ namespace Scripl.Core
 
         public void Save(string sourceCode, string targetExec)
         {
-            _repository.SaveSourceCode(new Contracts.SourceCode { Id = _fileSystem.GetChecksum(targetExec), Source = sourceCode });
+            _repository.SaveSourceCode(new Ports.SourceCode { Id = _fileSystem.GetChecksum(targetExec), Source = sourceCode });
         }
 
         public string GetSourceCode(string exePath)

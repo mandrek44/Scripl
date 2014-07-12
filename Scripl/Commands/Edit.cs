@@ -8,10 +8,9 @@ using NDesk.Options;
 using NLog;
 
 using Scripl.Attributes;
-using Scripl.Contracts;
+using Scripl.Ports;
 using Scripl.Runtime;
-
-using Scritpl.Utils;
+using Scripl.Utils;
 
 namespace Scripl.Commands
 {

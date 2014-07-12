@@ -3,9 +3,9 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Threading;
 
-using Scritpl.Utils.Contracts;
+using Scripl.Utils.Contracts;
 
-namespace Scritpl.Utils
+namespace Scripl.Utils
 {
     class PhysicalFileSystem : IFileSystem
     {

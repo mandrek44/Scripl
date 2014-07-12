@@ -9,7 +9,7 @@ using NLog;
 
 using Owin;
 
-using Scritpl.Utils.Contracts;
+using Scripl.Utils.Contracts;
 
 namespace Scripl.Runtime
 {

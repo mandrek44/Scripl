@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Runtime.Remoting;
 
-namespace Scritpl.Utils.Contracts
+namespace Scripl.Utils.Contracts
 {
     public interface IFileSystemWatcher
     {

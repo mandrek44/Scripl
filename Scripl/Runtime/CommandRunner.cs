@@ -14,8 +14,7 @@ using NLog;
 using Scripl.Attributes;
 using Scripl.Core;
 using Scripl.RavenDb;
-
-using Scritpl.Utils.Contracts;
+using Scripl.Utils.Contracts;
 
 namespace Scripl.Runtime
 {
@@ -40,13 +39,20 @@ namespace Scripl.Runtime
             _container = new Lazy<IContainer>(
                 () =>
                 {
-                    var containerBuilder = new ContainerBuilder();
-                    containerBuilder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly(), typeof(ICompiler).Assembly).AsSelf().AsImplementedInterfaces();
-                    containerBuilder.RegisterScriplCore();
-                    containerBuilder.RegisterType<SourceCodeRepository>().InstancePerLifetimeScope().AsSelf().AsImplementedInterfaces();
+                    var containerBuilder = GetContainerBuilder();
                     containerBuilder.RegisterInstance(this).AsSelf();
                     return containerBuilder.Build();
                 });
+        }
+
+        public static ContainerBuilder GetContainerBuilder()
+        {
+            var containerBuilder = new ContainerBuilder();
+            containerBuilder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly(), typeof(ICompiler).Assembly).AsSelf().AsImplementedInterfaces();
+            containerBuilder.RegisterScriplCore();
+            containerBuilder.RegisterType<SourceCodeRepository>().InstancePerLifetimeScope().AsSelf().AsImplementedInterfaces();
+
+            return containerBuilder;
         }
 
         public object Invoke(string commandName, params string[] commandArgs)

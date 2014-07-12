@@ -1,6 +1,6 @@
-﻿using Scritpl.Utils.Contracts;
+﻿using Scripl.Utils.Contracts;
 
-namespace Scritpl.Utils
+namespace Scripl.Utils
 {
     class LocalhostAddressProvider : IServiceAddressProvider
     {

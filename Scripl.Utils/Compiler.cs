@@ -4,9 +4,9 @@ using System.Threading;
 
 using Microsoft.CSharp;
 
-using Scritpl.Utils.Contracts;
+using Scripl.Utils.Contracts;
 
-namespace Scritpl.Utils
+namespace Scripl.Utils
 {
     public class Compiler : ICompiler
     {

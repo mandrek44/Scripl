@@ -3,7 +3,7 @@ using NDesk.Options;
 using NLog;
 
 using Scripl.Attributes;
-using Scripl.Contracts;
+using Scripl.Ports;
 
 namespace Scripl.Commands
 {

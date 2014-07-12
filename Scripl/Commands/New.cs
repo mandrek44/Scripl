@@ -2,8 +2,7 @@
 
 using Scripl.Attributes;
 using Scripl.Runtime;
-
-using Scritpl.Utils.Contracts;
+using Scripl.Utils.Contracts;
 
 namespace Scripl.Commands
 {

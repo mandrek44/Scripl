@@ -5,9 +5,9 @@ using System.Text.RegularExpressions;
 
 using Microsoft.Win32;
 
-using Scritpl.Utils.Contracts;
+using Scripl.Utils.Contracts;
 
-namespace Scritpl.Utils
+namespace Scripl.Utils
 {
     public class VisualStudioHelper
     {        

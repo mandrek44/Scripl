@@ -1,6 +1,6 @@
 using System.CodeDom.Compiler;
 
-namespace Scritpl.Utils.Contracts
+namespace Scripl.Utils.Contracts
 {
     public interface ICompiler
     {

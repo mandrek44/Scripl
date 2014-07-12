@@ -1,4 +1,4 @@
-namespace Scripl.Contracts
+namespace Scripl.Ports
 {
     public interface ISourceCodeRepository
     {

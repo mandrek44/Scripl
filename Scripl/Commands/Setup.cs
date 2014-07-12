@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Linq;
 using System.Reflection;
 
 using Mandro.Utils.Setup;
@@ -44,9 +45,11 @@ namespace Scripl.Commands
                 }
                 else
                 {
-                    ServiceInstaller.Uninstall("ScriplService");
-                    _log.Debug("Service removed");
-
+                    if (ServiceInstaller.ServiceIsInstalled("ScriplService"))
+                    {
+                        ServiceInstaller.Uninstall("ScriplService");
+                        _log.Debug("Service removed");
+                    }
                 }
             }
 
@@ -60,12 +63,16 @@ namespace Scripl.Commands
                     GeneralInstaller.CreateContextMenuItem("Folder", "NewScripl", "New Scripl", string.Format("\"{0}\" new \"%1\"", execLocation));
 
                     GeneralInstaller.RegisterUninstallLink(installationInfo);
+
+                    _log.Debug("Shell extensions added");
                 }
                 else
                 {
                     GeneralInstaller.DeleteContextMenuItem("exefile", "EditScripl");
                     GeneralInstaller.DeleteContextMenuItem("Directory\\Background", "NewScripl");
                     GeneralInstaller.DeleteContextMenuItem("Folder", "NewScripl");
+
+                    _log.Debug("Shell extensions removed");
                 }
             }
         }

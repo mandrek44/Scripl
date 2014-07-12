@@ -3,9 +3,9 @@ using System.ComponentModel;
 using System.IO;
 using System.Runtime.Remoting;
 
-using Scritpl.Utils.Contracts;
+using Scripl.Utils.Contracts;
 
-namespace Scritpl.Utils
+namespace Scripl.Utils
 {
     class PhysicalFileSystemWatcherWrapper : IFileSystemWatcher
     {
