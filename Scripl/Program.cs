@@ -4,8 +4,7 @@ using System.ServiceProcess;
 
 using NLog;
 
-using Scripl.PrimaryAdapters;
-using Scripl.PrimaryAdapters.Console;
+using Scripl.Runtime;
 
 namespace Scripl
 {
