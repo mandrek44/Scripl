@@ -1,6 +1,6 @@
 using Scripl.PortsOut;
 
-namespace Scripl.Adapters.OS
+namespace Scripl.SecondaryAdapters.OS
 {
     class UserSettings : IUserSettings
     {

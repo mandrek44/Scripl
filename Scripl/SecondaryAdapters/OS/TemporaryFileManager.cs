@@ -3,7 +3,7 @@ using System.IO;
 
 using Scripl.PortsOut;
 
-namespace Scripl.Adapters.OS
+namespace Scripl.SecondaryAdapters.OS
 {
     class TemporaryFileManager : ITemporaryFileManager
     {

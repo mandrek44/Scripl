@@ -3,10 +3,9 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Threading;
 
-using Scripl.NotStructured;
 using Scripl.PortsOut;
 
-namespace Scripl.Adapters.OS
+namespace Scripl.SecondaryAdapters.OS
 {
     class PhysicalFileSystem : IFileSystem
     {

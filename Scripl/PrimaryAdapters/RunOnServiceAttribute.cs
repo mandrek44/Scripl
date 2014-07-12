@@ -1,6 +1,6 @@
 using System;
 
-namespace Scripl.NotStructured
+namespace Scripl.PrimaryAdapters
 {
     internal class RunOnServiceAttribute : Attribute
     {

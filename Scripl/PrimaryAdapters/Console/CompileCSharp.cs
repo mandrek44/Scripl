@@ -1,21 +1,20 @@
-using Scripl.NotStructured;
 using Scripl.PortsIn;
 
-namespace Scripl.Adapters.Console
+namespace Scripl.PrimaryAdapters.Console
 {
     [Command("compile")]
     internal class CompileCSharp
     {
-        private readonly ICompileCSharp _compileCSharp;
+        private readonly ICSharpCompiler _icSharpCompiler;
 
-        public CompileCSharp(ICompileCSharp compileCSharp)
+        public CompileCSharp(ICSharpCompiler icSharpCompiler)
         {
-            _compileCSharp = compileCSharp;
+            _icSharpCompiler = icSharpCompiler;
         }
 
         public void Run(string sourceFile, string targetFile)
         {
-            _compileCSharp.Run(sourceFile, targetFile);
+            _icSharpCompiler.CompileFile(sourceFile, targetFile);
         }
     }
 }

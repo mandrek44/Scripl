@@ -6,9 +6,9 @@ using Autofac;
 
 using NLog;
 
-using Scripl.Adapters;
+using Scripl.SecondaryAdapters;
 
-namespace Scripl.NotStructured
+namespace Scripl.PrimaryAdapters
 {
     partial class WindowsService : ServiceBase
     {

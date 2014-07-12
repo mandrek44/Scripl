@@ -1,4 +1,5 @@
 using Scripl.PortsIn;
+using Scripl.PortsOut;
 
 namespace Scripl.PrimaryAdapters.Console
 {
@@ -6,16 +7,18 @@ namespace Scripl.PrimaryAdapters.Console
     [RunOnService]
     internal class AddSourceCode
     {
-        private readonly IAddSourceCode _addSourceCode;
+        private readonly ISourceCode _sourceCode;
+        private readonly IFileSystem _fileSystem;
 
-        public AddSourceCode(IAddSourceCode addSourceCode)
+        public AddSourceCode(ISourceCode sourceCode, IFileSystem fileSystem)
         {
-            _addSourceCode = addSourceCode;
+            _sourceCode = sourceCode;
+            _fileSystem = fileSystem;
         }
 
         public void Run(string sourceCodeFile, string targetExec)
         {
-            _addSourceCode.Run(sourceCodeFile, targetExec);
+            _sourceCode.Save(_fileSystem.ReadAllTextRetrying(sourceCodeFile), targetExec);
         }
     }
 }

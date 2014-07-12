@@ -7,7 +7,9 @@ using NDesk.Options;
 
 using NLog;
 
-namespace Scripl.NotStructured.Commands
+using Scripl.PrimaryAdapters;
+
+namespace Scripl.SecondaryAdapters
 {
     [Command("setup")]
     public class Setup

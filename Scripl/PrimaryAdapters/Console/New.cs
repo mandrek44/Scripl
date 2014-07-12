@@ -1,22 +1,34 @@
-﻿using Scripl.NotStructured;
-using Scripl.NotStructured.Commands;
-using Scripl.PortsIn;
+﻿using System.IO;
 
-namespace Scripl.Adapters.Console
+using Scripl.PortsOut;
+
+namespace Scripl.PrimaryAdapters.Console
 {
     [Command("new")]
     public class New
     {
-        private readonly INew _newCommand;
+        private readonly CommandRunner _commandRunner;
 
-        public New(INew newCommand)
+        private readonly ITemporaryFileManager _temporaryFileManager;
+        private readonly IUserSettings _userSettings;
+
+        public New(CommandRunner commandRunner, ITemporaryFileManager temporaryFileManager, IUserSettings userSettings)
         {
-            _newCommand = newCommand;
+            _commandRunner = commandRunner;
+            _temporaryFileManager = temporaryFileManager;
+            _userSettings = userSettings;
         }
 
         public void Run()
         {
-            _newCommand.Run();
+            var tempSourceFile = _temporaryFileManager.AddFileWithExtension("cs");
+            File.WriteAllText(tempSourceFile, _userSettings.newScriplTemplate);
+            
+            var exeName = Path.GetFullPath("editme.exe");
+
+            _commandRunner.Invoke((CompileCSharp compile) => compile.Run(tempSourceFile, exeName));
+            _commandRunner.Invoke((AddSourceCode add) => add.Run(tempSourceFile, exeName));
+            _commandRunner.Invoke((Edit edit) => edit.Run(exeName));
         }
     }
 }

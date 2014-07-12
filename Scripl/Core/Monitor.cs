@@ -15,23 +15,19 @@ namespace Scripl.Core
         private static readonly Logger _log = LogManager.GetCurrentClassLogger();
         private static readonly CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
 
-        private readonly ISourceCodeRepository _repository;
         private readonly ICompiler _compiler;
         private readonly IFileSystem _fileSystem;
-        private readonly ITemporaryFileManager _tempFiles;
 
-        private readonly IAddSourceCode _addSourceCode;
+        private readonly ISourceCode _sourceCode;
 
-        public Monitor(ISourceCodeRepository repository, ICompiler compiler, IFileSystem fileSystem, ITemporaryFileManager tempFiles, IAddSourceCode addSourceCode)
+        public Monitor(ICompiler compiler, IFileSystem fileSystem, ISourceCode sourceCode)
         {
-            _repository = repository;
             _compiler = compiler;
             _fileSystem = fileSystem;
-            _tempFiles = tempFiles;
-            _addSourceCode = addSourceCode;
+            _sourceCode = sourceCode;
         }
 
-        public void Run(string targetExec, string sourceCodeFile, bool isTemp)
+        public void StartRecompilingOnChange(string targetExec, string sourceCodeFile)
         {
             if (!_fileSystem.Exists(targetExec))
             {
@@ -39,32 +35,23 @@ namespace Scripl.Core
                 throw new InvalidOperationException();
             }
 
-            var checksum = _fileSystem.GetChecksum(targetExec);
-            var sourceCode = _repository.LoadSourceCode(checksum);
 
+            var sourceCode = _sourceCode.GetSourceCode(targetExec);
             if (sourceCode == null)
             {
                 _log.Trace("Cannot find sources for " + targetExec);
                 throw new FileNotFoundException();
             }
 
-            var source = sourceCode.Source;
-            var temporaryFile = sourceCodeFile;
-            if (isTemp)
-            {
-                _tempFiles.AddFile(temporaryFile);
-            }
-
-            _fileSystem.WriteAllText(temporaryFile, source);
+            _fileSystem.WriteAllText(sourceCodeFile, sourceCode);
 
             var token = _cancellationTokenSource.Token;
-
-            Action recompile = () => RecompileFile(temporaryFile, targetExec);
+            Action recompile = () => RecompileFile(sourceCodeFile, targetExec);
 
             Task.Run(
                 () =>
                 {
-                    var fileSystemWatcher = _fileSystem.WatchFile(temporaryFile);
+                    var fileSystemWatcher = _fileSystem.WatchFile(sourceCodeFile);
 
                     fileSystemWatcher.Changed += (sender, _) => recompile();
                     fileSystemWatcher.Renamed += (sender, _) => recompile();
@@ -72,7 +59,7 @@ namespace Scripl.Core
 
                     fileSystemWatcher.EnableRaisingEvents = true;
 
-                    _log.Trace("Waiting for changes in " + temporaryFile);
+                    _log.Trace("Waiting for changes in " + sourceCodeFile);
                     while (!token.IsCancellationRequested)
                     {
                         fileSystemWatcher.WaitForChanged(WatcherChangeTypes.All, 500);
@@ -88,7 +75,7 @@ namespace Scripl.Core
 
             if (!result.Errors.HasErrors)
             {
-                _addSourceCode.Run(sourceCodeFile, targetExec);
+                _sourceCode.Save(_fileSystem.ReadAllTextRetrying(sourceCodeFile), targetExec);
             }
         }
     }

@@ -1,8 +1,6 @@
 ﻿using NLog;
 
-using Scripl.NotStructured;
-
-namespace Scripl.Adapters
+namespace Scripl.PrimaryAdapters.Console
 {
     [Command("service")]
     internal class NetworkEndpointCommand

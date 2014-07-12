@@ -119,25 +119,18 @@
     <Compile Include="PrimaryAdapters\NetworkEndpoint.cs" />
     <Compile Include="PrimaryAdapters\Console\NetworkEndpointCommand.cs" />
     <Compile Include="SecondaryAdapters\OS\LocalhostAddressProvider.cs" />
-    <Compile Include="PortsIn\INew.cs" />
     <Compile Include="PortsIn\IMonitor.cs" />
     <Compile Include="Core\Monitor.cs" />
-    <Compile Include="PortsIn\ICompileCSharp.cs" />
-    <Compile Include="PortsIn\IAddSourceCode.cs" />
-    <Compile Include="Core\Edit.cs" />
+    <Compile Include="PortsIn\ICSharpCompiler.cs" />
+    <Compile Include="PortsIn\ISourceCode.cs" />
     <Compile Include="PortsOut\IFileSystemWatcher.cs" />
     <Compile Include="PortsOut\IUserSettings.cs" />
-    <Compile Include="PortsOut\IProcess.cs" />
-    <Compile Include="PortsOut\IProcessFactory.cs" />
     <Compile Include="PortsOut\ITemporaryFileManager.cs" />
-    <Compile Include="PortsIn\IEdit.cs" />
-    <Compile Include="PortsOut\IVisualStudioHelper.cs" />
     <Compile Include="SecondaryAdapters\OS\VisualStudioHelper.cs" />
     <Compile Include="PortsOut\ICompiler.cs" />
-    <Compile Include="Core\AddSourceCode.cs" />
+    <Compile Include="Core\SourceCode.cs" />
     <Compile Include="PrimaryAdapters\CommandAttribute.cs" />
     <Compile Include="SecondaryAdapters\OS\Compiler.cs" />
-    <Compile Include="Core\New.cs" />
     <Compile Include="SecondaryAdapters\Setup.cs" />
     <Compile Include="SecondaryAdapters\OS\PhysicalFileSystem.cs" />
     <Compile Include="PortsOut\IFileSystem.cs" />
@@ -146,10 +139,8 @@
     <Compile Include="PrimaryAdapters\Console\Monitor.cs" />
     <Compile Include="PrimaryAdapters\CommandRunner.cs" />
     <Compile Include="PrimaryAdapters\CommandsScanner.cs" />
-    <Compile Include="Core\CompileCSharp.cs" />
+    <Compile Include="Core\CSharpCompilerCompiler.cs" />
     <Compile Include="PrimaryAdapters\Console\Edit.cs" />
-    <Compile Include="SecondaryAdapters\OS\Process.cs" />
-    <Compile Include="SecondaryAdapters\OS\ProcessFactory.cs" />
     <Compile Include="SecondaryAdapters\OS\UserSettings.cs" />
     <Compile Include="SecondaryAdapters\OS\TemporaryFileManager.cs" />
     <Compile Include="SecondaryAdapters\OS\PhysicalFileSystemWatcherWrapper.cs" />
@@ -161,7 +152,7 @@
       <DependentUpon>ProjectInstaller.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Data\SourceCode.cs" />
+    <Compile Include="Contracts\SourceCode.cs" />
     <Compile Include="SecondaryAdapters\SourceCodeRepository.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>

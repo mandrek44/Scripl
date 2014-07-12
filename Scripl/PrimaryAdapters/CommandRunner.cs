@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Net;
 using System.Reflection;
 using System.Text;
@@ -10,9 +12,10 @@ using Autofac;
 
 using NLog;
 
-using Scripl.NotStructured;
+using Scripl.PortsOut;
+using Scripl.SecondaryAdapters;
 
-namespace Scripl.Adapters
+namespace Scripl.PrimaryAdapters
 {
     public class CommandRunner
     {
@@ -43,18 +46,26 @@ namespace Scripl.Adapters
                 });
         }
 
-        public void Invoke(string commandName, params string[] commandArgs)
+        public object Invoke(string commandName, params string[] commandArgs)
         {
             var commandType = Commands[commandName];
 
             if (!IsService && commandType.GetCustomAttributes(typeof(RunOnServiceAttribute)).Any() && IsServiceRunning())
             {
-                RunOnService(commandName, commandArgs);
+                return RunOnService(commandName, commandArgs);
             }
             else
             {
-                Invoke(commandType, commandArgs);
+                return Invoke(commandType, commandArgs);
             }
+        }
+
+        public void Invoke<T>(Expression<Action<T>> exp)
+        {
+            var commandName = exp.Parameters.First().Type.GetCustomAttribute<CommandAttribute>().Name;
+            var arguments = ((MethodCallExpression)exp.Body).Arguments;
+
+            Invoke(commandName, arguments.OfType<ConstantExpression>().Select(arg => arg.Value.ToString()).ToArray());
         }
 
         private IContainer IocContainer
@@ -89,7 +100,7 @@ namespace Scripl.Adapters
             }
         }
 
-        private void Invoke(Type commandType, string[] commandArgs)
+        private object Invoke(Type commandType, string[] commandArgs)
         {
             _log.Trace(commandType.Name + " " + string.Join(" ", commandArgs));
             var methodInfo = commandType.GetMethod("Run");
@@ -103,7 +114,7 @@ namespace Scripl.Adapters
                 realArgs = commandArgs;
             }
 
-            methodInfo.Invoke(IocContainer.Resolve(commandType), realArgs);
+            return methodInfo.Invoke(IocContainer.Resolve(commandType), realArgs);
         }
 
         private bool IsServiceRunning()
@@ -121,17 +132,17 @@ namespace Scripl.Adapters
             }
         }
 
-        private void RunOnService(string commandName, string[] commandArgs)
+        private string RunOnService(string commandName, string[] commandArgs)
         {
             using (var wc = new WebClient())
             {
                 var data = new NameValueCollection();
-                for (int i = 0; i < commandArgs.Length; i++)
+                for (var i = 0; i < commandArgs.Length; i++)
                 {
                     data.Add(i.ToString(), commandArgs[i]);
                 }
 
-                wc.UploadValues(string.Format("{0}/cli/", AddressProvider.GetAddress()) + commandName, "POST", data);
+                return Encoding.UTF8.GetString(wc.UploadValues(string.Format("{0}/cli/", AddressProvider.GetAddress()) + commandName, "POST", data));
             }
         }
     }

@@ -2,10 +2,9 @@ using NDesk.Options;
 
 using NLog;
 
-using Scripl.NotStructured;
 using Scripl.PortsIn;
 
-namespace Scripl.Adapters.Console
+namespace Scripl.PrimaryAdapters.Console
 {
     [Command("monitor")]
     [RunOnService]
@@ -23,16 +22,12 @@ namespace Scripl.Adapters.Console
         public void Run(params string[] args)
         {
             bool wait = true;
-            bool isTemp = false;
-            var notParsedArgs = (new OptionSet
-                                 {
-                                     { "no-wait", v => wait = v == null },
-                                     { "is-temp", v => isTemp = v != null }
-                                 }).Parse(args);
+            var notParsedArgs = (new OptionSet { { "no-wait", v => wait = v == null } }).Parse(args);
+            
             var targetExec = notParsedArgs[1];
             var sourceCodeFile = notParsedArgs[0];
 
-            _monitor.Run(targetExec, sourceCodeFile, isTemp);
+            _monitor.StartRecompilingOnChange(targetExec, sourceCodeFile);
 
             if (wait)
             {

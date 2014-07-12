@@ -1,4 +1,4 @@
-﻿namespace Scripl.NotStructured
+﻿namespace Scripl.PortsOut
 {
     public interface IServiceAddressProvider
     {

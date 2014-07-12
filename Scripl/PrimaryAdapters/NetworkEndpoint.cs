@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,15 +10,15 @@ using NLog;
 
 using Owin;
 
-using Scripl.NotStructured;
+using Scripl.PortsOut;
 
-namespace Scripl.Adapters
+namespace Scripl.PrimaryAdapters
 {
     internal class NetworkEndpoint
     {
         private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+        
         private readonly IServiceAddressProvider _addressProvider;
-
         private readonly CommandRunner _commandRunner;
 
         public NetworkEndpoint(IServiceAddressProvider addressProvider, CommandRunner commandRunner)
@@ -50,7 +51,8 @@ namespace Scripl.Adapters
             }
             else if (context.Request.Method == "POST" && context.Request.Path.StartsWithSegments(new PathString("/cli")))
             {
-                await RunCommandOnServer(context);
+                var result = await RunCommandOnServer(context);
+                context.Response.Write(result);
             }
             else
             {
@@ -64,13 +66,19 @@ namespace Scripl.Adapters
             await context.Response.WriteAsync("OK");
         }
 
-        private async Task RunCommandOnServer(IOwinContext context)
+        private async Task<string> RunCommandOnServer(IOwinContext context)
         {
             PathString commandNameSegment;
             context.Request.Path.StartsWithSegments(new PathString("/cli"), out commandNameSegment);
             var commandName = commandNameSegment.Value.Substring(1);
 
-            _commandRunner.Invoke(commandName, (await context.Request.ReadFormAsync()).OrderBy(pair => pair.Key).Select(pair => pair.Value.First()).ToArray());
+            var returnObj = _commandRunner.Invoke(commandName, (await GetCommandArguments(context)));
+            return returnObj.ToString();
+        }
+
+        private static async Task<string[]> GetCommandArguments(IOwinContext context)
+        {
+            return (await context.Request.ReadFormAsync()).OrderBy(pair => pair.Key).Select(pair => pair.Value.First()).ToArray();
         }
     }
 }

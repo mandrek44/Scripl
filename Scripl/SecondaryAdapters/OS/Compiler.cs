@@ -6,7 +6,7 @@ using Microsoft.CSharp;
 
 using Scripl.PortsOut;
 
-namespace Scripl.Adapters.OS
+namespace Scripl.SecondaryAdapters.OS
 {
     internal class Compiler : ICompiler
     {

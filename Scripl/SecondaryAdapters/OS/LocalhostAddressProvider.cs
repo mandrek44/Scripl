@@ -1,7 +1,6 @@
-﻿using Scripl.NotStructured;
-using Scripl.PortsOut;
+﻿using Scripl.PortsOut;
 
-namespace Scripl.Adapters.OS
+namespace Scripl.SecondaryAdapters.OS
 {
     class LocalhostAddressProvider : IServiceAddressProvider
     {

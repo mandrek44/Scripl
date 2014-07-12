@@ -7,20 +7,16 @@ using Microsoft.Win32;
 
 using Scripl.PortsOut;
 
-namespace Scripl.Adapters.OS
+namespace Scripl.SecondaryAdapters.OS
 {
-    public class VisualStudioHelper : IVisualStudioHelper
-    {
-        private readonly IFileSystem _fileSystem;
+    public class VisualStudioHelper
+    {        
         private readonly ITemporaryFileManager _temporaryFileManager;
-        private readonly IProcessFactory _processFactory;
         private readonly IUserSettings _settings;
 
-        public VisualStudioHelper(IFileSystem fileSystem, ITemporaryFileManager temporaryFileManager, IProcessFactory processFactory, IUserSettings settings)
+        public VisualStudioHelper(ITemporaryFileManager temporaryFileManager, IUserSettings settings)
         {
-            _fileSystem = fileSystem;
             _temporaryFileManager = temporaryFileManager;
-            _processFactory = processFactory;
             _settings = settings;
         }
 
@@ -34,7 +30,7 @@ namespace Scripl.Adapters.OS
         {
             var csProjFileContent = _settings.csprojTemplate.Replace("{sourceFileName}", Path.GetFileName(sourceFile));
             var tempCSProjFile = _temporaryFileManager.AddFileWithExtension("csproj", keepFile: true);
-            _fileSystem.WriteAllText(tempCSProjFile, csProjFileContent);
+            File.WriteAllText(tempCSProjFile, csProjFileContent);
 
             var slnContent = _settings.slnTemplate
                 .Replace("{SolutionGuid}", Guid.NewGuid().ToString())
@@ -43,9 +39,9 @@ namespace Scripl.Adapters.OS
                 .Replace("{csprojPath}", tempCSProjFile);
 
             var slnFile = _temporaryFileManager.AddFileWithExtension("sln", keepFile: true);
-            _fileSystem.WriteAllText(slnFile, slnContent);
+            File.WriteAllText(slnFile, slnContent);
 
-            var process = _processFactory.Start(slnFile);
+            var process = System.Diagnostics.Process.Start(slnFile);
             if (waitForEnd)
                 process.WaitForExit();
         }

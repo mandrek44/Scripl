@@ -1,4 +1,4 @@
-namespace Scripl.Data
+namespace Scripl.Contracts
 {
     public class SourceCode
     {

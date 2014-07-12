@@ -2,10 +2,10 @@ using System;
 
 using Raven.Client.Embedded;
 
-using Scripl.Data;
+using Scripl.Contracts;
 using Scripl.PortsOut;
 
-namespace Scripl.Adapters
+namespace Scripl.SecondaryAdapters
 {
     public class SourceCodeRepository : ISourceCodeRepository
     {

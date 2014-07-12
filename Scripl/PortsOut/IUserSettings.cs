@@ -7,5 +7,7 @@ namespace Scripl.PortsOut
         string slnTemplate { get; set; }
 
         int Port { get; set; }
+
+        string newScriplTemplate { get; set; }
     }
 }
