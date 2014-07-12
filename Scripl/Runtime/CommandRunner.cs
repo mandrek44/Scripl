@@ -5,14 +5,11 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Text;
 
 using Autofac;
 
 using NLog;
-
-using Raven.Abstractions.Extensions;
 
 using Scripl.Attributes;
 using Scripl.Core;
@@ -87,24 +84,12 @@ namespace Scripl.Runtime
             {
                 yield return ((ConstantExpression)member).Value.ToString();
             }
-            else if (member is MemberExpression)
+            else 
             {
-                var objectMember = Expression.Convert(member, typeof(object));
-                var getterLambda = Expression.Lambda<Func<object>>(objectMember);
+                var objectMember = Expression.Convert(member, typeof(string));
+                var getterLambda = Expression.Lambda<Func<string>>(objectMember);
 
-                yield return getterLambda.Compile()().ToString();
-            }
-            else
-            {
-                throw new Exception("Don't know how to get value of " + member.GetType().Name + " expression");
-            }
-        }
-
-        private IContainer IocContainer
-        {
-            get
-            {
-                return _container.Value;
+                yield return getterLambda.Compile()();
             }
         }
 
@@ -128,7 +113,7 @@ namespace Scripl.Runtime
         {
             get
             {
-                return _addressProvider ?? (_addressProvider = IocContainer.Resolve<IServiceAddressProvider>());
+                return _addressProvider ?? (_addressProvider = _container.Value.Resolve<IServiceAddressProvider>());
             }
         }
 
@@ -146,7 +131,7 @@ namespace Scripl.Runtime
                 realArgs = commandArgs;
             }
 
-            return methodInfo.Invoke(IocContainer.Resolve(commandType), realArgs);
+            return methodInfo.Invoke(_container.Value.Resolve(commandType), realArgs);
         }
 
         private bool IsServiceRunning()
