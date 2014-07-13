@@ -37,7 +37,7 @@ Scripl does it by storing locally source code of exe using exe file's checksum.
         -is-temp: indicates that source is temporary file and can be deleted.
 
 ## Using without command line
-You can you scripl without command line - just run the 'scripl setup -service -shell' in Administrator Command Line. This will install Scripl Windows Service, and will add "Edit" option in the exe file context menu.
+You can use Scripl without command line - just run the `scripl setup -service -shell` in Administrator Command Line. This will install Scripl Windows Service, and will add "Edit" option in the exe file context menu.
 
 
 
